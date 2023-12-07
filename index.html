@@ -450,6 +450,8 @@
                             </div>
                             
                         </div>
+
+                        <div id="log"></div>
 					</div>
 				</main>
 			</div>
@@ -707,49 +709,35 @@
 					// cycle on tables
 					// html contains information about one table
 				var html = `
-  <div class="row">
-    <div class="col-12 col-sm-12">
-        <div class="card">
-
-      <div class="card-header d-lg-flex">
-        <h3 class="card-title mb-lg-0 mb-3">Drivers Performance Report</h3>
-        <div class="tabs-menu1 ms-auto border-0 p-0">
-          <!-- Tabs -->
-          <ul class="nav panel-tabs product-sale">
-            <li><a href="#" data-bs-toggle="tab">
-              Date/Time: ${date.getDate()} - ${month} ${date.getFullYear()} ${date.getHours()}: ${date.getMinutes()}: ${date.getSeconds()}
-            </a></li>
-            <li><a href="#" data-bs-toggle="tab">
-              GMT Time Zone: ${date}
-            </a></li>
-            <li><a href="#" data-bs-toggle="tab">
-              ${tables[i].label}
-            </a></li>
-          </ul>
-        </div>
-      </div>
-
-    // 
-      <div class="card-body product-table">
-        
-        <div class="tab-content">
-          <div class="tab-pane border-0 p-0 active" id="tab5">
-            <div class="table-responsive">
-              <table class="table table-bordered text-nowrap mb-0">
+<div class="bg-white shadow-lg rounded-sm border border-slate-200 mb-8">
+	<h2 class="font-semibold text-slate-800">Drivers Performance Report</h2>
+	<h4 class="text-slate-800">
+		Date/Time:${date.getDate()} - ${month} ${date.getFullYear()}
+		${date.getHours()}: ${date.getMinutes()}: ${date.getSeconds()}
+	</h4>
+	<h4 class="text-slate-800">GMT Time Zone: ${date}</h4>
+	<h2 class="text-slate-800">${tables[i].label}</h2>
+	<div>
+		<div class="overflow-x-auto">
+			<table class="table-auto w-full divide-y divide-slate-200">
 `;
 
 var headers = tables[i].header; // get table headers
 console.log(headers);
 
 html += `
-              <thead class="border-top">
-                <tr>
+             <thead
+					class="text-xs uppercase text-slate-500 bg-slate-50 border-t border-slate-200"
+				>
+					<tr>
 `;
 
 for (var j = 0; j < headers.length; j++) {
 console.log(headers[j]);
   // add header
-  html += `<th>${headers[j]}</th>`;
+  html += `	<th class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+							<div class="font-semibold text-left">${headers[j]}</div>
+						</th>`;
 }
 
 html += `
@@ -772,16 +760,14 @@ result.getTableRows(
       // cycle on table rows
       if (typeof rows[j].c == "undefined") continue; // skip empty rows
 
-      html += `<tbody><tr>`;
+      html += `<tbody class="text-sm"><tr>`;
 
       for (var k = 0; k < rows[j].c.length; k++) {
         // add ceils to table
         html += `
-            <td>
-              <h6 class="mb-0 fs-14 fw-semibold">
-                ${getTableValue(rows[j].c[k])}
-              </h6>
-            </td>
+          <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+							<div class="font-medium text-slate-800"> ${getTableValue(rows[j].c[k])}</div>
+						</td>
         `;
       }
 
@@ -794,10 +780,6 @@ result.getTableRows(
     html += `
               </table>`;
 msg(html + ` </div>
-          </div>
-        </div>
-      </div>
-  </div>
   </div>
   </div>`);
 },
